@@ -1,8 +1,10 @@
+import System.IO
 import Text.Read
 import Data.Maybe
 
 import Commons.Utils
 import Ray
+import Scene
 
 parser::(FromList a)=>[String]->(Double->Bool)->Maybe a
 parser x f | any (==Nothing) readed = Nothing
@@ -25,3 +27,13 @@ parseLightPoints arg = do
 						 p <- parsePoint p
 						 c <- parseColor c
 						 return $ LightPoint p c 
+						 
+parseScene::String->IO Scene
+parseScene fileName = withFile fileName ReadMode (\h -> do
+															content <- hGetContents h
+															let fileLines = lines content
+															let x = parseColor . words $ head fileLines
+															print x
+															return defaultScene
+												  )
+						 
