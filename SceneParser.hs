@@ -1,11 +1,19 @@
 import System.IO
 import Text.Read
 import Data.Maybe
+import Data.Char (isSpace)
+import Data.List
 
 import Commons.Utils
 import Ray
 import Scene
 
+
+
+trim :: String -> String
+trim = f . f
+   where f = reverse . dropWhile isSpace
+   
 parser::(FromList a)=>[String]->(Double->Bool)->Maybe a
 parser x f | any (==Nothing) readed = Nothing
 		   | otherwise = fromList $ filter f $ fromJust <$> readed 
@@ -28,12 +36,19 @@ parseLightPoints arg = do
 						 c <- parseColor c
 						 return $ LightPoint p c 
 						 
-parseScene::String->IO Scene
+parseObjects::String ->Maybe Scene
+parseObjects content = do
+						 let (diffuse:n:body) =  filter (\x->x /="" && not ("//" `isPrefixOf` x)) $ trim <$> lines content
+						 diffusion <- parseColor . words $ diffuse
+						 let (lp,primitives) = splitAt (read n) body
+						 lightPoints <- mapM parseLightPoints ( words <$> lp)
+						 return $ Scene diffusion lightPoints
+						 
+parseScene::String->IO (Maybe Scene)
 parseScene fileName = withFile fileName ReadMode (\h -> do
 															content <- hGetContents h
-															let fileLines = lines content
-															let x = parseColor . words $ head fileLines
-															print x
-															return defaultScene
+															let scene = parseObjects content
+															print scene
+															return scene
 												  )
 						 
