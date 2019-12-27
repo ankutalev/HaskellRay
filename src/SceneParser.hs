@@ -3,7 +3,7 @@ import Text.Read
 import Data.Maybe
 import Data.Char (isSpace)
 import Data.List
-
+import Primitives.Sphere
 import Commons.Utils
 import Ray
 import Scene
@@ -27,8 +27,7 @@ parseColor arg = parser arg (\x-> x>=0 && x<= 255 )
 parsePoint::[String]->Maybe (Point Double)
 parsePoint arg = parser arg (\x->True)
 
-
-                                 
+        
 parseLightPoints :: [String] -> Maybe LightPoint    
 parseLightPoints arg = do
                          let (p,c) = splitAt 3 arg
@@ -51,3 +50,7 @@ parseScene fileName = withFile fileName ReadMode (\h -> do
                                                           print scene
                                                           return scene
                                                   )
+main = do
+          scene <- parseScene "examples/bunny.scene"
+          print scene
+                                                                                                    

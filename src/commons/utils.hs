@@ -18,3 +18,6 @@ instance Functor Color where
 	
 toFloatModel::Color Int->Color Float
 toFloatModel c = (/ 255) <$> fromIntegral <$> c
+
+
+data OpticalCharacteristic a = Optical { diffusion::Color Double, mirror::Color Double, power::Double } deriving (Show,Eq) 
