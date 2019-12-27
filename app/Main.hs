@@ -1,6 +1,8 @@
 module Main where
 
-import Lib
+--import Lib
+import SceneParser
 
-main :: IO ()
-main = someFunc
+main = do
+          scene <- parseScene "../examples/bunny.scene"
+          print scene

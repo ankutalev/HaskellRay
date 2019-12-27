@@ -1,3 +1,5 @@
+module SceneParser where 
+
 import System.IO
 import Text.Read
 import Data.Maybe
@@ -50,7 +52,4 @@ parseScene fileName = withFile fileName ReadMode (\h -> do
                                                           print scene
                                                           return scene
                                                   )
-main = do
-          scene <- parseScene "examples/bunny.scene"
-          print scene
                                                                                                     
