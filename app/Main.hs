@@ -1,7 +1,7 @@
 module Main where
 
 --import Lib
-import SceneParser
+import Scene.SceneParser
 
 main = do
           scene <- parseScene "../examples/bunny.scene"

@@ -1,4 +1,4 @@
-module SceneParser where 
+module Scene.SceneParser where 
 
 import System.IO
 import Text.Read
@@ -8,7 +8,7 @@ import Data.List
 import Primitives.Sphere
 import Commons.Utils
 import Ray
-import Scene
+import Scene.Scene
 
 
 

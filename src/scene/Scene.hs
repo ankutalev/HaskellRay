@@ -1,4 +1,4 @@
-module Scene where
+module Scene.Scene where
 import Commons.Utils
 import Ray
 
